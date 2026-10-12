@@ -1,10 +1,13 @@
 # 🧾 Prachay Corporate Expense Voucher Management System (EVMS)
 
-A production-ready Full Stack web application engineered to digitize employee expense reimbursements, Director approvals, and Accounts Team settlement monitoring. Built with clean architecture, enterprise role-based authorization, and secure AWS S3 private digital signature storage with presigned URLs.
+### 🚀 **LIVE DEMO**: [https://prachay.kodesesh.space](https://prachay.kodesesh.space)
 
-> 🌐 **Live Custom Domain (HTTPS)**: [https://prachay.kodesesh.space](https://prachay.kodesesh.space)  
-> 🔗 **Backend API Health Check**: [https://prachay.kodesesh.space/api/health](https://prachay.kodesesh.space/api/health)  
-> 🖥️ **Direct VPS Mirror**: [http://167.86.127.138:5173](http://167.86.127.138:5173)
+> 🌐 **Live Application URL**: **[https://prachay.kodesesh.space](https://prachay.kodesesh.space)**  
+> ⚡ **Live API Health Check**: [https://prachay.kodesesh.space/api/health](https://prachay.kodesesh.space/api/health)  
+> 🖥️ **Direct VPS Mirror**: [http://167.86.127.138:5173](http://167.86.127.138:5173)  
+> 🔑 **Demo Credentials**: 1-Click login buttons available for **Employee**, **Director**, and **Accounts** on the login page.
+
+A production-ready Full Stack web application engineered to digitize employee expense reimbursements, Director approvals, and Accounts Team settlement monitoring. Built with clean architecture, enterprise role-based authorization, and secure AWS S3 private digital signature storage with presigned URLs.
 
 ---
 

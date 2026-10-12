@@ -17,10 +17,20 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// 1x1 transparent PNG sample signature data for mock files
-const samplePngBase64 =
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-const sampleSignatureBuffer = Buffer.from(samplePngBase64, 'base64');
+// Realistic digital calligraphy signatures for demo seed data
+const empSignatureSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" width="320" height="110">
+  <path d="M 35 65 Q 65 15 90 50 T 130 65 Q 165 20 195 70 Q 225 30 255 65 Q 275 80 300 55" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 45 80 Q 150 88 285 75" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+  <text x="45" y="58" font-family="'Brush Script MT', 'Segoe Script', cursive, sans-serif" font-size="34" font-weight="bold" fill="#0f172a">Rahul Sharma</text>
+  <text x="50" y="96" font-family="monospace" font-size="10" fill="#64748b">EMP-1042 • Digitally Signed</text>
+</svg>`;
+
+const dirSignatureSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" width="320" height="110">
+  <path d="M 30 45 Q 60 5 95 70 T 145 35 Q 180 15 215 65 Q 240 40 290 50" fill="none" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 40 85 Q 135 90 285 80" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="40" y="55" font-family="'Brush Script MT', 'Segoe Script', cursive, sans-serif" font-size="32" font-weight="bold" fill="#0f172a">V. Roy</text>
+  <text x="50" y="96" font-family="monospace" font-size="10" fill="#475569">Executive Director • Prachay Securities</text>
+</svg>`;
 
 export const seedDatabase = async () => {
   try {
@@ -33,8 +43,10 @@ export const seedDatabase = async () => {
     // Write sample mock signature files
     const empSigFile = 'sample-emp-sig.png';
     const dirSigFile = 'sample-dir-sig.png';
-    fs.writeFileSync(path.join(uploadsDir, empSigFile), sampleSignatureBuffer);
-    fs.writeFileSync(path.join(uploadsDir, dirSigFile), sampleSignatureBuffer);
+    fs.writeFileSync(path.join(uploadsDir, empSigFile), empSignatureSvg);
+    fs.writeFileSync(path.join(uploadsDir, dirSigFile), dirSignatureSvg);
+    fs.writeFileSync(path.join(uploadsDir, 'sample-emp-sig.svg'), empSignatureSvg);
+    fs.writeFileSync(path.join(uploadsDir, 'sample-dir-sig.svg'), dirSignatureSvg);
 
     // Create Demo Users for each role
     const employeeUser = await User.create({

@@ -4,11 +4,11 @@ import multer from 'multer';
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg', 'image/svg+xml'];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file format. Only JPEG, PNG, and WebP images are permitted for signatures.'));
+    cb(new Error('Invalid file format. Only JPEG, PNG, WebP, and SVG images are permitted for signatures.'));
   }
 };
 

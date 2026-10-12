@@ -13,6 +13,11 @@ import {
   Moon,
   Menu,
   X,
+  User,
+  Shield,
+  CreditCard,
+  Building2,
+  ChevronDown,
 } from 'lucide-react';
 
 export const Navbar = () => {
@@ -26,70 +31,60 @@ export const Navbar = () => {
     navigate('/login');
   };
 
-  const getRoleBadge = (role) => {
+  const getRoleIcon = (role) => {
     switch (role) {
       case 'Director':
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-            Director (Admin)
-          </span>
-        );
+        return <Shield className="w-3.5 h-3.5 text-indigo-400" />;
       case 'Accounts':
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-            Accounts Team
-          </span>
-        );
+        return <CreditCard className="w-3.5 h-3.5 text-indigo-400" />;
       default:
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-            Employee
-          </span>
-        );
+        return <User className="w-3.5 h-3.5 text-indigo-400" />;
     }
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition ${
+    `flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 ${
       isActive
-        ? 'bg-slate-800 text-white dark:bg-slate-800 dark:text-white border border-slate-700'
-        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+        ? 'bg-slate-900 text-white dark:bg-white/10 dark:text-white shadow-xs border border-slate-700/50'
+        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/5'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 text-slate-100">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200 shadow-2xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
-          {/* Brand */}
-          <div className="flex items-center gap-6">
-            <NavLink to="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-xs">
-                <Receipt className="w-4 h-4" />
+        <div className="flex items-center justify-between h-16">
+          {/* Brand Logo & Platform Title */}
+          <div className="flex items-center gap-8">
+            <NavLink to="/" className="flex items-center gap-3 group">
+              <div className="w-9 h-9 rounded-xl bg-slate-900 dark:bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-slate-900/10 group-hover:scale-105 transition-transform duration-200">
+                <Receipt className="w-4.5 h-4.5 text-indigo-400 dark:text-white" />
               </div>
               <div className="text-left">
-                <span className="text-sm font-semibold tracking-tight text-white block leading-tight">
+                <span className="text-sm font-black tracking-tight text-slate-900 dark:text-white block leading-tight">
                   Prachay EVMS
                 </span>
-                <span className="text-[10px] text-slate-400 font-normal">Expense Portal</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">
+                  Corporate Expense Management
+                </span>
               </div>
             </NavLink>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1 border-l border-slate-800 pl-6">
+            <nav className="hidden md:flex items-center gap-1.5 border-l border-slate-200/80 dark:border-slate-800 pl-6">
               <NavLink to="/" end className={navLinkClasses}>
                 <LayoutDashboard className="w-3.5 h-3.5" />
-                Dashboard
+                <span>Dashboard</span>
               </NavLink>
 
               {user?.role === 'Employee' && (
                 <>
                   <NavLink to="/vouchers/create" className={navLinkClasses}>
                     <FilePlus className="w-3.5 h-3.5" />
-                    Create Voucher
+                    <span>Create Voucher</span>
                   </NavLink>
                   <NavLink to="/vouchers" className={navLinkClasses}>
                     <Files className="w-3.5 h-3.5" />
-                    My Vouchers
+                    <span>My Vouchers</span>
                   </NavLink>
                 </>
               )}
@@ -98,11 +93,11 @@ export const Navbar = () => {
                 <>
                   <NavLink to="/approvals" className={navLinkClasses}>
                     <CheckSquare className="w-3.5 h-3.5" />
-                    Pending Approvals
+                    <span>Pending Approvals</span>
                   </NavLink>
                   <NavLink to="/vouchers" className={navLinkClasses}>
                     <Files className="w-3.5 h-3.5" />
-                    All Vouchers
+                    <span>All Vouchers</span>
                   </NavLink>
                 </>
               )}
@@ -110,36 +105,47 @@ export const Navbar = () => {
               {user?.role === 'Accounts' && (
                 <NavLink to="/vouchers" className={navLinkClasses}>
                   <Files className="w-3.5 h-3.5" />
-                  All Organization Vouchers
+                  <span>All Organization Vouchers</span>
                 </NavLink>
               )}
             </nav>
           </div>
 
-          {/* Right utility items */}
-          <div className="flex items-center gap-2.5">
-            {/* Theme switcher */}
+          {/* Right Utility Navigation: User Profile, Theme Toggle & Logout */}
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 transition cursor-pointer"
+              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 border border-slate-200/80 dark:border-slate-800 transition-all duration-200 cursor-pointer shadow-2xs"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
-              {isDark ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-400" />}
+              {isDark ? (
+                <Sun className="w-4 h-4 text-amber-400 hover:rotate-90 transition-transform duration-300" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-600 hover:-rotate-12 transition-transform duration-300" />
+              )}
             </button>
 
-            {/* User profile summary */}
-            <div className="hidden sm:flex items-center gap-2 border-l border-slate-800 pl-3">
-              <div className="text-right">
-                <span className="text-xs font-medium text-slate-200 block leading-tight">{user?.name}</span>
-                <span className="text-[10px] text-slate-400">{user?.department}</span>
+            {/* User Profile Glass Pill */}
+            <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/60 shadow-2xs">
+              <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center border border-indigo-200/50 dark:border-indigo-800/50">
+                {getRoleIcon(user?.role)}
               </div>
-              {getRoleBadge(user?.role)}
+              <div className="text-left">
+                <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight">
+                  {user?.name}
+                </span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                  {user?.role} • {user?.department}
+                </span>
+              </div>
             </div>
 
-            {/* Logout button */}
+            {/* Logout Action Button */}
             <button
               onClick={handleLogout}
-              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 transition cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50/70 dark:hover:bg-rose-950/30 border border-slate-200/80 dark:border-slate-800 transition-all duration-200 cursor-pointer shadow-2xs"
+              title="Sign Out"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -148,74 +154,86 @@ export const Navbar = () => {
             {/* Mobile Hamburger toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+              className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 border border-slate-200/80 dark:border-slate-800 transition cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile dropdown menu */}
+        {/* Mobile dropdown drawer with glassmorphism */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-3 border-t border-slate-800 space-y-1 text-left">
+          <div className="md:hidden py-4 border-t border-slate-200/80 dark:border-slate-800 space-y-1.5 text-left animate-fadeIn">
             <NavLink
               to="/"
               end
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
             >
-              Dashboard
+              <LayoutDashboard className="w-4 h-4 text-indigo-500" />
+              <span>Dashboard</span>
             </NavLink>
+
             {user?.role === 'Employee' && (
               <>
                 <NavLink
                   to="/vouchers/create"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
                 >
-                  Create Voucher
+                  <FilePlus className="w-4 h-4 text-indigo-500" />
+                  <span>Create Voucher</span>
                 </NavLink>
                 <NavLink
                   to="/vouchers"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
                 >
-                  My Vouchers
+                  <Files className="w-4 h-4 text-indigo-500" />
+                  <span>My Vouchers</span>
                 </NavLink>
               </>
             )}
+
             {user?.role === 'Director' && (
               <>
                 <NavLink
                   to="/approvals"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
                 >
-                  Pending Approvals
+                  <CheckSquare className="w-4 h-4 text-indigo-500" />
+                  <span>Pending Approvals</span>
                 </NavLink>
                 <NavLink
                   to="/vouchers"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
                 >
-                  All Vouchers
+                  <Files className="w-4 h-4 text-indigo-500" />
+                  <span>All Vouchers</span>
                 </NavLink>
               </>
             )}
+
             {user?.role === 'Accounts' && (
               <NavLink
                 to="/vouchers"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-xs font-medium text-slate-300 hover:bg-slate-800"
+                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80"
               >
-                All Vouchers
+                <Files className="w-4 h-4 text-indigo-500" />
+                <span>All Vouchers</span>
               </NavLink>
             )}
-            <div className="pt-2 border-t border-slate-800 flex items-center justify-between px-3">
-              <span className="text-xs text-slate-400">{user?.name} ({user?.role})</span>
+
+            <div className="pt-3 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between px-3">
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {user?.name} ({user?.role})
+              </span>
               <button
                 onClick={handleLogout}
-                className="text-xs text-rose-400 font-medium cursor-pointer"
+                className="text-xs text-rose-500 hover:text-rose-600 font-semibold cursor-pointer"
               >
                 Logout
               </button>

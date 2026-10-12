@@ -9,14 +9,32 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, role, department, employeeId } = req.body;
 
-    if (!name || !email || !password || !role) {
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, message: 'Full name is required.' });
+    }
+
+    if (!email || !email.trim()) {
+      return res.status(400).json({ success: false, message: 'Email address is required.' });
+    }
+
+    // Email format validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email.trim())) {
       return res.status(400).json({
         success: false,
-        message: 'Name, email, password, and role are required.',
+        message: 'Please provide a valid corporate email address (e.g., name@domain.com).',
       });
     }
 
-    const existingUser = await User.findOne({ email });
+    if (!password || password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long.',
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -24,13 +42,21 @@ export const register = async (req, res) => {
       });
     }
 
+    // Auto-generate employeeId if not supplied: EMP-XXXX
+    let finalEmpId = employeeId && employeeId.trim() ? employeeId.trim() : null;
+    if (!finalEmpId) {
+      const userCount = await User.countDocuments();
+      const randomSalt = Math.floor(100 + Math.random() * 900);
+      finalEmpId = `EMP-${userCount + 1001}${randomSalt}`;
+    }
+
     const user = await User.create({
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
       password,
-      role,
+      role: role || 'Employee',
       department: department || 'General',
-      employeeId: employeeId || '',
+      employeeId: finalEmpId,
     });
 
     const token = generateToken(user);

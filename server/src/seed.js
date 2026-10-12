@@ -37,22 +37,13 @@ export const seedDatabase = async () => {
     fs.writeFileSync(path.join(uploadsDir, dirSigFile), sampleSignatureBuffer);
 
     // Create Demo Users for each role
-    const employeeUser1 = await User.create({
+    const employeeUser = await User.create({
       name: 'Rahul Sharma',
       email: 'employee@prachay.com',
       password: 'password123',
       role: 'Employee',
       department: 'Engineering',
       employeeId: 'EMP-1042',
-    });
-
-    const employeeUser2 = await User.create({
-      name: 'Priya Patel',
-      email: 'priya@prachay.com',
-      password: 'password123',
-      role: 'Employee',
-      department: 'Marketing & Sales',
-      employeeId: 'EMP-1088',
     });
 
     const directorUser = await User.create({
@@ -64,7 +55,7 @@ export const seedDatabase = async () => {
       employeeId: 'DIR-0001',
     });
 
-    const accountsUser1 = await User.create({
+    const accountsUser = await User.create({
       name: 'Ananya Deshmukh',
       email: 'accounts@prachay.com',
       password: 'password123',
@@ -73,21 +64,10 @@ export const seedDatabase = async () => {
       employeeId: 'ACC-0509',
     });
 
-    const accountsUser2 = await User.create({
-      name: 'Rohan Mehta',
-      email: 'rohan.acc@prachay.com',
-      password: 'password123',
-      role: 'Accounts',
-      department: 'Finance & Accounts',
-      employeeId: 'ACC-0512',
-    });
-
-    console.log('✅ Created Demo Users across multiple departments:');
-    console.log('   1. Employee 1 (Engineering): employee@prachay.com / password123');
-    console.log('   2. Employee 2 (Marketing):   priya@prachay.com / password123');
-    console.log('   3. Director (Admin):          director@prachay.com / password123');
-    console.log('   4. Accounts 1 (Finance):      accounts@prachay.com / password123');
-    console.log('   5. Accounts 2 (Finance):      rohan.acc@prachay.com / password123');
+    console.log('✅ Created 3 Standard Demo Users:');
+    console.log('   1. Employee: employee@prachay.com / password123');
+    console.log('   2. Director: director@prachay.com / password123');
+    console.log('   3. Accounts: accounts@prachay.com / password123');
 
     // Create Initial Demo Vouchers in various states
     const vouchers = [
@@ -101,9 +81,9 @@ export const seedDatabase = async () => {
         description: 'AWS Solutions Architect professional training fee and test vouchers for team lead.',
         amount: 14500,
         status: 'Approved',
-        employee: employeeUser1._id,
-        employeeName: employeeUser1.name,
-        employeeId: employeeUser1.employeeId,
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
         employeeSignatureKey: `local:${empSigFile}`,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
@@ -120,9 +100,9 @@ export const seedDatabase = async () => {
         description: 'Dinner with 6 project contributors to celebrate Sprint 14 release milestone.',
         amount: 8200,
         status: 'Submitted',
-        employee: employeeUser1._id,
-        employeeName: employeeUser1.name,
-        employeeId: employeeUser1.employeeId,
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
         employeeSignatureKey: `local:${empSigFile}`,
       },
       {
@@ -135,9 +115,9 @@ export const seedDatabase = async () => {
         description: 'Roundtrip flight and airport taxi for on-site product pilot presentation.',
         amount: 19800,
         status: 'Submitted',
-        employee: employeeUser1._id,
-        employeeName: employeeUser1.name,
-        employeeId: employeeUser1.employeeId,
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
         employeeSignatureKey: `local:${empSigFile}`,
       },
       {
@@ -150,9 +130,9 @@ export const seedDatabase = async () => {
         description: 'Ergonomic display setup for high-load engineering station.',
         amount: 12400,
         status: 'Draft',
-        employee: employeeUser1._id,
-        employeeName: employeeUser1.name,
-        employeeId: employeeUser1.employeeId,
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
       },
       {
         voucherNumber: 'EV-2026-0005',
@@ -164,29 +144,14 @@ export const seedDatabase = async () => {
         description: 'Device for mobile responsiveness test suite.',
         amount: 35000,
         status: 'Rejected',
-        employee: employeeUser1._id,
-        employeeName: employeeUser1.name,
-        employeeId: employeeUser1.employeeId,
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
         employeeSignatureKey: `local:${empSigFile}`,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
         approvalDate: new Date('2026-04-09'),
         rejectionReason: 'Please request equipment through IT Procurement Department rather than expense reimbursement.',
-      },
-      {
-        voucherNumber: 'EV-2026-0006',
-        voucherDate: new Date('2026-04-09'),
-        expenseDate: new Date('2026-04-08'),
-        department: 'Marketing & Sales',
-        title: 'Annual FinTech Expo Booth Branding & Flyers',
-        category: 'Office Supplies',
-        description: 'Printed standees, company merchandise, and booth banners for Bengaluru convention.',
-        amount: 22500,
-        status: 'Submitted',
-        employee: employeeUser2._id,
-        employeeName: employeeUser2.name,
-        employeeId: employeeUser2.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
       },
     ];
 

@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 import { DashboardDispatcher } from './pages/DashboardDispatcher';
 import { VoucherForm } from './pages/VoucherForm';
 import { VoucherList } from './pages/VoucherList';
@@ -14,8 +15,9 @@ export function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public Route */}
+          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           {/* Protected Routes inside Layout */}
           <Route element={<ProtectedRoute />}>

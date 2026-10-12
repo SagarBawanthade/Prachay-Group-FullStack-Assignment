@@ -116,14 +116,22 @@ export const Login = () => {
               <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
                 Instant One-Click Demo Logins
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <button
                   type="button"
                   onClick={() => handleQuickLogin('employee@prachay.com')}
                   className="p-2.5 rounded-lg border border-blue-200 bg-blue-50/70 hover:bg-blue-100/70 text-blue-800 text-xs font-bold text-center transition flex flex-col items-center gap-1 cursor-pointer"
                 >
                   <UserCheck className="w-4 h-4 text-blue-600" />
-                  Employee
+                  Employee 1 (Eng)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickLogin('priya@prachay.com')}
+                  className="p-2.5 rounded-lg border border-cyan-200 bg-cyan-50/70 hover:bg-cyan-100/70 text-cyan-800 text-xs font-bold text-center transition flex flex-col items-center gap-1 cursor-pointer"
+                >
+                  <UserCheck className="w-4 h-4 text-cyan-600" />
+                  Employee 2 (Mkt)
                 </button>
                 <button
                   type="button"
@@ -143,8 +151,17 @@ export const Login = () => {
                 </button>
               </div>
               <p className="text-[11px] text-slate-400 text-center mt-2.5 font-medium">
-                Default password for all roles: <code className="text-slate-600 font-bold bg-slate-100 px-1 py-0.5 rounded">password123</code>
+                Default password for all demo users: <code className="text-slate-600 font-bold bg-slate-100 px-1 py-0.5 rounded">password123</code>
               </p>
+
+              <div className="mt-4 pt-3 border-t border-slate-100 text-center">
+                <a
+                  href="/register"
+                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800"
+                >
+                  Create new Employee / Accounts / Director account →
+                </a>
+              </div>
             </div>
           </div>
         </div>

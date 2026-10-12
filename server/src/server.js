@@ -1,12 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import voucherRoutes from './routes/voucherRoutes.js';
 import signatureRoutes from './routes/signatureRoutes.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -57,7 +55,7 @@ const startServer = async () => {
     const { User } = await import('./models/User.js');
     const userCount = await User.countDocuments();
     if (userCount === 0) {
-      console.log('⚡ No users found in database. Automatically seeding demo accounts & vouchers...');
+      console.log('No users found in database. Automatically seeding demo accounts & vouchers...');
       const { seedDatabase } = await import('./seed.js');
       await seedDatabase();
     }
@@ -66,8 +64,8 @@ const startServer = async () => {
   }
 
   app.listen(PORT, () => {
-    console.log(`🚀 Expense Voucher API Server running on port ${PORT}`);
-    console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
+    console.log(`Expense Voucher API Server running on port ${PORT}`);
+    console.log(`API Base URL: http://localhost:${PORT}/api`);
   });
 };
 

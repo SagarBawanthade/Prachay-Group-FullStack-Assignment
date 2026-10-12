@@ -19,10 +19,10 @@ export const connectDB = async () => {
       const mongod = await MongoMemoryServer.create();
       const inMemoryUri = mongod.getUri();
       const memConn = await mongoose.connect(inMemoryUri);
-      console.log(`✅ MongoMemoryServer Started & Connected: ${memConn.connection.host}`);
-      console.log(`ℹ️ In-memory database enabled for seamless local demonstration and testing.`);
+      console.log(`MongoMemoryServer Started & Connected: ${memConn.connection.host}`);
+      console.log(`In-memory database enabled for seamless local demonstration and testing.`);
     } catch (memErr) {
-      console.error(`❌ Failed to start in-memory MongoDB fallback:`, memErr);
+      console.error(`Failed to start in-memory MongoDB fallback:`, memErr);
       process.exit(1);
     }
   }

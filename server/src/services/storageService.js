@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import fs from 'fs';
@@ -13,33 +14,43 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// AWS S3 client configuration
-const s3Region = process.env.AWS_REGION || 'us-east-1';
-const s3Bucket = process.env.AWS_S3_BUCKET_NAME;
-const hasAwsCredentials = Boolean(
-  process.env.AWS_ACCESS_KEY_ID &&
-  process.env.AWS_SECRET_ACCESS_KEY &&
-  process.env.AWS_S3_BUCKET_NAME
-);
+let cachedS3 = null;
 
-let s3Client = null;
-if (hasAwsCredentials) {
-  try {
-    s3Client = new S3Client({
-      region: s3Region,
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      },
-    });
-    console.log(`✅ AWS S3 Client initialized successfully for bucket: [${s3Bucket}] in region: [${s3Region}]`);
-  } catch (err) {
-    console.error('⚠️ Failed initializing AWS S3 Client:', err.message);
-    s3Client = null;
+/**
+ * Dynamically resolves AWS S3 Client and Bucket configuration from environment
+ */
+export const getS3Config = () => {
+  if (cachedS3) return cachedS3;
+
+  const s3Region = (process.env.AWS_REGION || 'us-east-1').trim();
+  const s3Bucket = process.env.AWS_S3_BUCKET_NAME?.trim();
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID?.trim();
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY?.trim();
+
+  if (accessKeyId && secretAccessKey && s3Bucket) {
+    try {
+      const client = new S3Client({
+        region: s3Region,
+        credentials: {
+          accessKeyId,
+          secretAccessKey,
+        },
+      });
+      console.log(`✅ AWS S3 Client connected successfully to bucket [${s3Bucket}] in region [${s3Region}]`);
+      cachedS3 = { client, bucket: s3Bucket, region: s3Region };
+      return cachedS3;
+    } catch (err) {
+      console.error('⚠️ Failed initializing AWS S3 Client:', err.message);
+    }
+  } else {
+    console.log('ℹ️ AWS S3 credentials not fully configured in .env. Using secure tokenized presigned URLs with local repository.');
   }
-} else {
-  console.log('ℹ️ AWS S3 credentials not fully configured in .env. Using secure tokenized presigned URLs with local repository.');
-}
+
+  return null;
+};
+
+// Initial check on load
+getS3Config();
 
 /**
  * Upload a file buffer to S3 or local fallback
@@ -54,16 +65,19 @@ export const uploadSignature = async (buffer, originalName, mimeType) => {
   const randomSuffix = Math.round(Math.random() * 1e9);
   const key = `signatures/${timestamp}-${randomSuffix}${extension}`;
 
-  if (s3Client && s3Bucket) {
+  const s3 = getS3Config();
+
+  if (s3) {
     try {
+      console.log(`🚀 Uploading signature buffer (${buffer.length} bytes) to AWS S3 bucket: [${s3.bucket}], key: [${key}]`);
       const uploadParams = {
-        Bucket: s3Bucket,
+        Bucket: s3.bucket,
         Key: key,
         Body: buffer,
         ContentType: mimeType,
       };
-      await s3Client.send(new PutObjectCommand(uploadParams));
-      console.log(`✅ Signature uploaded to AWS S3: ${key}`);
+      await s3.client.send(new PutObjectCommand(uploadParams));
+      console.log(`✅ Signature successfully uploaded to AWS S3: ${key}`);
       return key;
     } catch (s3Err) {
       console.error(`⚠️ AWS S3 upload failed (${s3Err.message}). Gracefully saving to local storage fallback.`);
@@ -87,15 +101,18 @@ export const uploadSignature = async (buffer, originalName, mimeType) => {
 export const getPresignedSignatureUrl = async (storageKey, baseUrl = '') => {
   if (!storageKey) return null;
 
+  const s3 = getS3Config();
+
   // 1. AWS S3 Storage Key
-  if (!storageKey.startsWith('local:') && s3Client && s3Bucket) {
+  if (!storageKey.startsWith('local:') && s3) {
     try {
       const command = new GetObjectCommand({
-        Bucket: s3Bucket,
+        Bucket: s3.bucket,
         Key: storageKey,
       });
       // Expires in 15 minutes (900 seconds)
-      const presignedUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 });
+      const presignedUrl = await getSignedUrl(s3.client, command, { expiresIn: 900 });
+      console.log(`🔗 Generated AWS S3 Presigned URL for key [${storageKey}]`);
       return presignedUrl;
     } catch (err) {
       console.error('Error generating AWS S3 presigned URL:', err.message);

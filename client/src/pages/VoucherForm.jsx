@@ -8,12 +8,13 @@ import {
   Save,
   Send,
   ArrowLeft,
-  AlertCircle,
   Building2,
   Calendar,
   Layers,
   IndianRupee,
-  AlignLeft,
+  FileText,
+  Sparkles,
+  Info,
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -40,7 +41,7 @@ const DEPARTMENTS = [
 ];
 
 export const VoucherForm = () => {
-  const { id } = useParams(); // If id exists, edit mode
+  const { id } = useParams();
   const isEdit = Boolean(id);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -148,66 +149,69 @@ export const VoucherForm = () => {
 
   if (fetching) {
     return (
-      <div className="py-12 flex justify-center items-center">
-        <div className="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="py-24 flex justify-center items-center">
+        <div className="w-8 h-8 border-3 border-slate-900 dark:border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 text-left">
-      {/* Top Header */}
-      <div className="flex items-center justify-between">
+      {/* Top Header Card */}
+      <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/60 rounded-2xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800/80 shadow-xs flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Link
             to="/vouchers"
-            className="p-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 shadow-2xs transition"
+            className="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white shadow-2xs transition"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
               {isEdit ? 'Edit Draft Expense Voucher' : 'Create New Expense Voucher'}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Fill in expense details according to company reimbursement policy.
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Submit accurate reimbursement particulars according to corporate finance policy
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
-        {/* Section 1: Employee Metadata (Read-only for transparency) */}
-        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Main Glass Form Card */}
+      <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-xs p-6 sm:p-8 space-y-6">
+        {/* User Context Metadata */}
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850/80 border border-slate-200/80 dark:border-slate-750 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-              Employee Name
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+              Claimant Name
             </span>
-            <span className="text-sm font-semibold text-slate-800">{user?.name}</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-0.5 block">
+              {user?.name}
+            </span>
           </div>
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
               Employee ID
             </span>
-            <span className="text-sm font-semibold text-slate-800">
+            <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-0.5 block font-mono">
               {user?.employeeId || 'EMP-1042'}
             </span>
           </div>
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-              Initial Status
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+              Target Lifecycle
             </span>
-            <span className="text-sm font-semibold text-indigo-600">
+            <span className="text-xs sm:text-sm font-bold text-indigo-600 dark:text-indigo-400 mt-0.5 block">
               {isEdit ? 'Draft (In Progress)' : 'Draft (Auto-Assigned)'}
             </span>
           </div>
         </div>
 
-        {/* Section 2: Form Inputs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Inputs Form */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           {/* Department */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Department <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
@@ -215,12 +219,14 @@ export const VoucherForm = () => {
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border bg-white text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
-                  errors.department ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition ${
+                  errors.department
+                    ? 'border-rose-400 bg-rose-50/20'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
                 }`}
               >
                 {DEPARTMENTS.map((dept) => (
-                  <option key={dept} value={dept}>
+                  <option key={dept} value={dept} className="dark:bg-slate-900">
                     {dept}
                   </option>
                 ))}
@@ -233,7 +239,7 @@ export const VoucherForm = () => {
 
           {/* Expense Date */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Expense Incurred Date <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
@@ -242,8 +248,10 @@ export const VoucherForm = () => {
                 type="date"
                 value={expenseDate}
                 onChange={(e) => setExpenseDate(e.target.value)}
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
-                  errors.expenseDate ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+                  errors.expenseDate
+                    ? 'border-rose-400 bg-rose-50/20'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
                 }`}
               />
             </div>
@@ -252,18 +260,20 @@ export const VoucherForm = () => {
             )}
           </div>
 
-          {/* Expense Title */}
+          {/* Title */}
           <div className="sm:col-span-2">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Expense Title / Purpose <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Travel Tickets for Regional Client Meeting in Delhi"
-              className={`w-full px-4 py-2.5 rounded-xl border text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
-                errors.title ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+              placeholder="e.g. Flight travel tickets for Mumbai regional client pilot meeting"
+              className={`w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+                errors.title
+                  ? 'border-rose-400 bg-rose-50/20'
+                  : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
               }`}
             />
             {errors.title && <p className="text-xs text-rose-600 mt-1">{errors.title}</p>}
@@ -271,18 +281,18 @@ export const VoucherForm = () => {
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-              Expense Category <span className="text-rose-500">*</span>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Category <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
               <Layers className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
               >
                 {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
+                  <option key={cat} value={cat} className="dark:bg-slate-900">
                     {cat}
                   </option>
                 ))}
@@ -292,7 +302,7 @@ export const VoucherForm = () => {
 
           {/* Amount */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Amount (INR ₹) <span className="text-rose-500">*</span>
             </label>
             <div className="relative">
@@ -306,8 +316,10 @@ export const VoucherForm = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
-                  errors.amount ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+                  errors.amount
+                    ? 'border-rose-400 bg-rose-50/20'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
                 }`}
               />
             </div>
@@ -316,15 +328,15 @@ export const VoucherForm = () => {
 
           {/* Description */}
           <div className="sm:col-span-2">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
               Expense Item Description / Bill Remarks
             </label>
             <textarea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Provide itemized details, invoice numbers, or justification..."
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              placeholder="Provide itemized details, invoice numbers, or business justification..."
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
             />
           </div>
 
@@ -338,17 +350,18 @@ export const VoucherForm = () => {
               required={false}
               error={errors.signature}
             />
-            <p className="text-xs text-slate-400 mt-1.5">
-              Note: You can save drafts without a signature, but submitting for Director approval requires an uploaded signature.
-            </p>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mt-2">
+              <Info className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+              <span>Drafts can be saved without signature. Signature is required when submitting for Director review.</span>
+            </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
+        {/* Action Buttons with Full Mobile Responsiveness */}
+        <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-end gap-3">
           <Link
             to="/vouchers"
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition text-center"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs sm:text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition text-center cursor-pointer"
           >
             Cancel
           </Link>
@@ -357,7 +370,7 @@ export const VoucherForm = () => {
             type="button"
             disabled={loading}
             onClick={() => handleSubmit('draft')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-sm transition cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-750 transition cursor-pointer shadow-2xs"
           >
             <Save className="w-4 h-4" />
             {loading ? 'Saving...' : 'Save as Draft'}
@@ -367,7 +380,7 @@ export const VoucherForm = () => {
             type="button"
             disabled={loading}
             onClick={() => handleSubmit('submit')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md shadow-indigo-600/20 transition cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer"
           >
             <Send className="w-4 h-4" />
             {loading ? 'Submitting...' : 'Submit for Approval'}

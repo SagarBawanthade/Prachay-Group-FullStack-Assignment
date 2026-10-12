@@ -1,16 +1,20 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+import fs from 'fs';
+import mongoose from 'mongoose';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure .env is loaded regardless of execution working directory
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config();
+
 import { User } from './models/User.js';
 import { Voucher } from './models/Voucher.js';
 import { connectDB } from './config/db.js';
 
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, '../uploads');
 
 if (!fs.existsSync(uploadsDir)) {
@@ -36,8 +40,7 @@ export const seedDatabase = async () => {
   try {
     console.log('🌱 Seeding database...');
 
-    // Clear existing data
-    await User.deleteMany({});
+    // Clear existing vouchers
     await Voucher.deleteMany({});
 
     // Write sample mock signature files
@@ -48,40 +51,49 @@ export const seedDatabase = async () => {
     fs.writeFileSync(path.join(uploadsDir, 'sample-emp-sig.svg'), empSignatureSvg);
     fs.writeFileSync(path.join(uploadsDir, 'sample-dir-sig.svg'), dirSignatureSvg);
 
-    // Create Demo Users for each role
-    const employeeUser = await User.create({
-      name: 'Rahul Sharma',
-      email: 'employee@prachay.com',
-      password: 'password123',
-      role: 'Employee',
-      department: 'Engineering',
-      employeeId: 'EMP-1042',
-    });
+    // Upsert or create Demo Users for each role
+    let employeeUser = await User.findOne({ email: 'employee@prachay.com' });
+    if (!employeeUser) {
+      employeeUser = await User.create({
+        name: 'Sagar Bawanthade',
+        email: 'employee@prachay.com',
+        password: 'password123',
+        role: 'Employee',
+        department: 'Engineering',
+        employeeId: 'EMP-1042',
+      });
+    }
 
-    const directorUser = await User.create({
-      name: 'Vikramaditya Roy',
-      email: 'director@prachay.com',
-      password: 'password123',
-      role: 'Director',
-      department: 'Executive Management',
-      employeeId: 'DIR-0001',
-    });
+    let directorUser = await User.findOne({ email: 'director@prachay.com' });
+    if (!directorUser) {
+      directorUser = await User.create({
+        name: 'Vikramaditya Roy',
+        email: 'director@prachay.com',
+        password: 'password123',
+        role: 'Director',
+        department: 'Executive Management',
+        employeeId: 'DIR-0001',
+      });
+    }
 
-    const accountsUser = await User.create({
-      name: 'Ananya Deshmukh',
-      email: 'accounts@prachay.com',
-      password: 'password123',
-      role: 'Accounts',
-      department: 'Finance & Accounts',
-      employeeId: 'ACC-0509',
-    });
+    let accountsUser = await User.findOne({ email: 'accounts@prachay.com' });
+    if (!accountsUser) {
+      accountsUser = await User.create({
+        name: 'Ananya Deshmukh',
+        email: 'accounts@prachay.com',
+        password: 'password123',
+        role: 'Accounts',
+        department: 'Finance & Accounts',
+        employeeId: 'ACC-0509',
+      });
+    }
 
-    console.log('✅ Created 3 Standard Demo Users:');
+    console.log('✅ Standard Demo Users Ready:');
     console.log('   1. Employee: employee@prachay.com / password123');
     console.log('   2. Director: director@prachay.com / password123');
     console.log('   3. Accounts: accounts@prachay.com / password123');
 
-    // Create Initial Demo Vouchers in various states
+    // Create Initial Demo Vouchers covering all statuses (Approved, Submitted, Draft, Rejected)
     const vouchers = [
       {
         voucherNumber: 'EV-2026-0001',
@@ -119,42 +131,27 @@ export const seedDatabase = async () => {
       },
       {
         voucherNumber: 'EV-2026-0003',
-        voucherDate: new Date('2026-04-02'),
-        expenseDate: new Date('2026-04-01'),
+        voucherDate: new Date('2026-04-01'),
+        expenseDate: new Date('2026-03-30'),
         department: 'Engineering',
-        title: 'Client Demo Flight to Mumbai & Cab Conveyance',
-        category: 'Travel & Conveyance',
-        description: 'Roundtrip flight and airport taxi for on-site product pilot presentation.',
-        amount: 19800,
-        status: 'Submitted',
-        employee: employeeUser._id,
-        employeeName: employeeUser.name,
-        employeeId: employeeUser.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
-      },
-      {
-        voucherNumber: 'EV-2026-0004',
-        voucherDate: new Date('2026-04-05'),
-        expenseDate: new Date('2026-04-04'),
-        department: 'Engineering',
-        title: 'External Ergonomic Mechanical Keyboards & Monitors',
-        category: 'Hardware & Equipment',
-        description: 'Ergonomic display setup for high-load engineering station.',
-        amount: 12400,
+        title: 'Ergonomic Desk Accessories & External Monitor Arm',
+        category: 'Office Supplies',
+        description: 'Dual monitor stand and ergonomic wireless keyboard for developer workstation.',
+        amount: 6450,
         status: 'Draft',
         employee: employeeUser._id,
         employeeName: employeeUser.name,
         employeeId: employeeUser.employeeId,
       },
       {
-        voucherNumber: 'EV-2026-0005',
-        voucherDate: new Date('2026-04-08'),
-        expenseDate: new Date('2026-04-07'),
+        voucherNumber: 'EV-2026-0004',
+        voucherDate: new Date('2026-04-03'),
+        expenseDate: new Date('2026-04-02'),
         department: 'Engineering',
-        title: 'High-end Smartphone for Test Lab',
-        category: 'Hardware & Equipment',
-        description: 'Device for mobile responsiveness test suite.',
-        amount: 35000,
+        title: 'Client Hospitality Dinner at Taj Exotica Goa',
+        category: 'Travel & Conveyance',
+        description: 'Flight tickets and luxury hotel stay for technology partnership conference.',
+        amount: 38500,
         status: 'Rejected',
         employee: employeeUser._id,
         employeeName: employeeUser.name,
@@ -162,19 +159,37 @@ export const seedDatabase = async () => {
         employeeSignatureKey: `local:${empSigFile}`,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
-        approvalDate: new Date('2026-04-09'),
-        rejectionReason: 'Please request equipment through IT Procurement Department rather than expense reimbursement.',
+        rejectionReason: 'Expense exceeds standard quarterly allowance. Please attach prior written pre-approval from department VP and revised itemized GST invoices.',
+      },
+      {
+        voucherNumber: 'EV-2026-0005',
+        voucherDate: new Date('2026-04-05'),
+        expenseDate: new Date('2026-04-04'),
+        department: 'Engineering',
+        title: 'Annual GitHub Copilot & JetBrains Tooling License',
+        category: 'Software & Subscriptions',
+        description: 'Annual enterprise subscriptions for AI code completion and IDE productivity pack.',
+        amount: 19800,
+        status: 'Approved',
+        employee: employeeUser._id,
+        employeeName: employeeUser.name,
+        employeeId: employeeUser.employeeId,
+        employeeSignatureKey: `local:${empSigFile}`,
+        approvedBy: directorUser._id,
+        directorName: directorUser.name,
+        directorSignatureKey: `local:${dirSigFile}`,
+        approvalDate: new Date('2026-04-06'),
       },
     ];
 
     await Voucher.insertMany(vouchers);
-    console.log(`✅ Seeded ${vouchers.length} demo vouchers across Draft, Submitted, Approved, and Rejected states.`);
+    console.log(`✅ Seeded ${vouchers.length} demo vouchers across Draft, Submitted, Approved, and Rejected states in MongoDB Atlas.`);
   } catch (error) {
     console.error('❌ Seeding failed:', error);
   }
 };
 
-// If run directly via node src/seed.js
+// If run directly via node src/seed.js or npm run seed
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const runSeed = async () => {
     await connectDB();

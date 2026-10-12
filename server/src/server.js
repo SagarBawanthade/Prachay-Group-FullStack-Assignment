@@ -1,4 +1,14 @@
-import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure .env is loaded regardless of execution working directory
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './config/db.js';
@@ -50,12 +60,17 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   await connectDB();
 
-  // If running in development or in-memory, auto-seed if no users exist
+  // Auto-seed if users or vouchers are empty
   try {
     const { User } = await import('./models/User.js');
-    const userCount = await User.countDocuments();
-    if (userCount === 0) {
-      console.log('No users found in database. Automatically seeding demo accounts & vouchers...');
+    const { Voucher } = await import('./models/Voucher.js');
+    const [userCount, voucherCount] = await Promise.all([
+      User.countDocuments(),
+      Voucher.countDocuments(),
+    ]);
+
+    if (userCount === 0 || voucherCount === 0) {
+      console.log(`Database check: ${userCount} users, ${voucherCount} vouchers. Automatically seeding demo data...`);
       const { seedDatabase } = await import('./seed.js');
       await seedDatabase();
     }

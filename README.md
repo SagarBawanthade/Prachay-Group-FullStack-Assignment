@@ -2,8 +2,9 @@
 
 A production-ready Full Stack web application engineered to digitize employee expense reimbursements, Director approvals, and Accounts Team settlement monitoring. Built with clean architecture, enterprise role-based authorization, and secure AWS S3 private digital signature storage with presigned URLs.
 
-> 🌐 **Live Production Deployment**: [http://167.86.127.138:5173](http://167.86.127.138:5173)  
-> 🔗 **Backend API Health**: [http://167.86.127.138:5173/api/health](http://167.86.127.138:5173/api/health)
+> 🌐 **Live Custom Domain (HTTPS)**: [https://prachay.kodesesh.space](https://prachay.kodesesh.space)  
+> 🔗 **Backend API Health Check**: [https://prachay.kodesesh.space/api/health](https://prachay.kodesesh.space/api/health)  
+> 🖥️ **Direct VPS Mirror**: [http://167.86.127.138:5173](http://167.86.127.138:5173)
 
 ---
 

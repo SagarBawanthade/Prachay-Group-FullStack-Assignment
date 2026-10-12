@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 export const WorkflowStepper = ({ status, rejectionReason }) => {
   const steps = [
@@ -9,49 +9,33 @@ export const WorkflowStepper = ({ status, rejectionReason }) => {
       label: status === 'Rejected' ? 'Rejected' : 'Approved',
       description: status === 'Rejected' ? 'Disapproved with remarks' : 'Approved by Director',
     },
-    { label: 'Accounts Processing', description: 'Reimbursement Queue' },
+    { label: 'Settlement', description: 'Accounts Processing' },
   ];
 
   const getStepStatus = (index) => {
-    if (status === 'Draft') {
-      if (index === 0) return 'current';
-      return 'upcoming';
-    }
-    if (status === 'Submitted') {
-      if (index === 0) return 'complete';
-      if (index === 1) return 'current';
-      return 'upcoming';
-    }
-    if (status === 'Approved') {
-      if (index <= 2) return 'complete';
-      return 'current';
-    }
-    if (status === 'Rejected') {
-      if (index <= 1) return 'complete';
-      if (index === 2) return 'rejected';
-      return 'upcoming';
-    }
+    if (status === 'Draft') return index === 0 ? 'current' : 'upcoming';
+    if (status === 'Submitted') return index === 0 ? 'complete' : index === 1 ? 'current' : 'upcoming';
+    if (status === 'Approved') return index <= 2 ? 'complete' : 'current';
+    if (status === 'Rejected') return index <= 1 ? 'complete' : index === 2 ? 'rejected' : 'upcoming';
     return 'upcoming';
   };
 
   return (
-    <div className="bg-white p-5 rounded-xl border border-slate-200">
-      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
-        Voucher Lifecycle Workflow
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 relative">
+    <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+      <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 text-left">
+        Voucher Approval Lifecycle
+      </p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {steps.map((step, idx) => {
           const stepState = getStepStatus(idx);
-          let bgClass = 'bg-slate-100 text-slate-500 border-slate-200';
-          let lineClass = 'bg-slate-200';
+          let bgClass = 'bg-slate-50 dark:bg-slate-850 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800';
 
           if (stepState === 'complete') {
-            bgClass = 'bg-emerald-50 text-emerald-700 border-emerald-300 font-medium';
-            lineClass = 'bg-emerald-500';
+            bgClass = 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700';
           } else if (stepState === 'current') {
-            bgClass = 'bg-indigo-50 text-indigo-700 border-indigo-300 font-semibold ring-2 ring-indigo-200';
+            bgClass = 'bg-slate-900 text-white dark:bg-indigo-600 dark:text-white border-slate-900 dark:border-indigo-600';
           } else if (stepState === 'rejected') {
-            bgClass = 'bg-rose-50 text-rose-700 border-rose-300 font-semibold ring-2 ring-rose-200';
+            bgClass = 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900';
           }
 
           return (
@@ -59,15 +43,15 @@ export const WorkflowStepper = ({ status, rejectionReason }) => {
               key={idx}
               className={`p-3 rounded-lg border text-left flex flex-col justify-between ${bgClass}`}
             >
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-bold uppercase tracking-wider">
-                  Step {idx + 1}
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider opacity-75">
+                  Stage 0{idx + 1}
                 </span>
-                {stepState === 'complete' && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                {stepState === 'complete' && <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
               </div>
               <div>
-                <p className="text-sm font-bold">{step.label}</p>
-                <p className="text-xs opacity-80 mt-0.5">{step.description}</p>
+                <p className="text-xs font-semibold">{step.label}</p>
+                <p className="text-[11px] opacity-75 mt-0.5">{step.description}</p>
               </div>
             </div>
           );
@@ -75,11 +59,11 @@ export const WorkflowStepper = ({ status, rejectionReason }) => {
       </div>
 
       {status === 'Rejected' && rejectionReason && (
-        <div className="mt-4 p-3 rounded-lg bg-rose-50 border border-rose-200 text-left">
-          <p className="text-xs font-bold text-rose-700 uppercase tracking-wider">
-            Rejection Feedback from Director:
+        <div className="mt-3 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-left">
+          <p className="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">
+            Director Review Remarks:
           </p>
-          <p className="text-sm text-rose-900 mt-1 font-medium italic">"{rejectionReason}"</p>
+          <p className="text-xs text-rose-900 dark:text-rose-200 mt-0.5">"{rejectionReason}"</p>
         </div>
       )}
     </div>

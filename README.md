@@ -166,6 +166,7 @@ Signatures are sensitive executive and employee assets that must not be exposed 
 ### Prerequisites
 - Node.js (v18.x or v20.x+)
 - npm (v9.x+)
+- AWS Account
 
 ### Quick Start (Zero Config In-Memory Demo)
 1. Clone the repository:

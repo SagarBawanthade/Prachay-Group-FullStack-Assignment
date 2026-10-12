@@ -189,15 +189,36 @@ Signatures are sensitive executive and employee assets that must not be exposed 
 ## 🚀 Installation & Setup Guide
 
 ### Prerequisites
-- Node.js (v18.x or v20.x+)
+- Node.js (v18.x or v20.x+) or Docker & Docker Compose
 - npm (v9.x+)
-- AWS Account
 
-### Quick Start (Zero Config In-Memory Demo)
+---
+
+### 🐳 One-Command Docker Deployment (Instant Live Stack)
+Run the entire production stack (Nginx SPA Frontend + Express Backend + Atlas/S3 Cloud Connectivity) in isolated Docker containers:
+
+```bash
+# 1. Build and launch all services in detached mode:
+docker compose up --build -d
+
+# 2. Open the application:
+# Frontend Web App: http://localhost:5173
+# Backend API Endpoint: http://localhost:5001/api/health
+```
+
+To view logs or stop the containers:
+```bash
+docker compose logs -f
+docker compose down
+```
+
+---
+
+### 💻 Manual Local Development (Without Docker)
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd prachay-group-assignment
+   git clone https://github.com/SagarBawanthade/Prachay-Group-FullStack-Assignment.git
+   cd Prachay-Group-FullStack-Assignment
    ```
 
 2. Install dependencies for both backend and frontend:

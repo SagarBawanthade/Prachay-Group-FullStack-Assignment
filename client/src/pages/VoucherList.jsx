@@ -147,8 +147,8 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
       {/* Title & Action Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">{pageTitle}</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{pageTitle}</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
             Search, filter, and review voucher reimbursement workflows.
           </p>
         </div>
@@ -156,7 +156,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
         {user?.role === 'Employee' && (
           <Link
             to="/vouchers/create"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-bold text-sm shadow-sm transition cursor-pointer"
           >
             <FilePlus className="w-4 h-4" />
             New Voucher
@@ -164,8 +164,8 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
         )}
       </div>
 
-      {/* Filter and Search Box */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+      {/* Filter and Search Box with Glassmorphism */}
+      <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-sm space-y-4 transition-all">
         <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-3">
           {/* Search bar */}
           <div className="md:col-span-2 relative">
@@ -175,7 +175,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search voucher #, title, employee, department..."
-              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 placeholder-slate-400"
             />
           </div>
 
@@ -187,10 +187,10 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setStatus(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500"
             >
               {STATUSES.map((st) => (
-                <option key={st} value={st}>
+                <option key={st} value={st} className="dark:bg-slate-900">
                   Status: {st}
                 </option>
               ))}
@@ -201,14 +201,14 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
           <div className="flex gap-2">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold transition cursor-pointer"
+              className="flex-1 px-4 py-2 bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white rounded-xl text-sm font-bold transition cursor-pointer shadow-xs"
             >
               Search
             </button>
             <button
               type="button"
               onClick={handleResetFilters}
-              className="px-3 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl text-sm font-medium transition cursor-pointer"
+              className="px-3 py-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-sm font-medium transition cursor-pointer"
               title="Reset Filters"
             >
               <RefreshCw className="w-4 h-4" />
@@ -217,7 +217,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
         </form>
 
         {/* Extended Filters row: Department, Category, Date range, Amount */}
-        <div className="pt-3 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs">
+        <div className="pt-3 border-t border-slate-200/80 dark:border-slate-800 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs">
           <div>
             <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">
               Department
@@ -228,10 +228,10 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setDepartment(e.target.value);
                 setPage(1);
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200 bg-white"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white"
             >
               {DEPARTMENTS.map((dept) => (
-                <option key={dept} value={dept}>
+                <option key={dept} value={dept} className="dark:bg-slate-900">
                   {dept}
                 </option>
               ))}
@@ -248,10 +248,10 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setCategory(e.target.value);
                 setPage(1);
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200 bg-white truncate"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white truncate"
             >
               {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
+                <option key={cat} value={cat} className="dark:bg-slate-900">
                   {cat}
                 </option>
               ))}
@@ -269,7 +269,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setStartDate(e.target.value);
                 setPage(1);
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200 text-slate-700"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white"
             />
           </div>
 
@@ -284,7 +284,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setEndDate(e.target.value);
                 setPage(1);
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200 text-slate-700"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white"
             />
           </div>
 
@@ -301,7 +301,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setPage(1);
                 fetchVouchers();
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white"
             />
           </div>
 
@@ -318,17 +318,17 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 setPage(1);
                 fetchVouchers();
               }}
-              className="w-full p-1.5 rounded-lg border border-slate-200"
+              className="w-full p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-950/60 text-slate-900 dark:text-white"
             />
           </div>
         </div>
       </div>
 
-      {/* Vouchers Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+      {/* Vouchers Table Glass Container */}
+      <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden transition-all">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-500 text-xs uppercase font-semibold border-b border-slate-200">
+            <thead className="bg-slate-50/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase font-semibold border-b border-slate-200/80 dark:border-slate-800">
               <tr>
                 <th
                   onClick={() => {
@@ -371,51 +371,51 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                 <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="px-5 py-12 text-center text-slate-400">
-                    <div className="inline-block w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                  <td colSpan={10} className="px-5 py-12 text-center text-slate-400 dark:text-slate-500">
+                    <div className="inline-block w-6 h-6 border-2 border-indigo-600 dark:border-indigo-400 border-t-transparent rounded-full animate-spin"></div>
                     <p className="mt-2 text-xs">Loading records...</p>
                   </td>
                 </tr>
               ) : vouchers.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-5 py-12 text-center text-slate-400">
+                  <td colSpan={10} className="px-5 py-12 text-center text-slate-400 dark:text-slate-500">
                     No vouchers found matching your filter criteria.
                   </td>
                 </tr>
               ) : (
                 vouchers.map((voucher) => (
-                  <tr key={voucher._id} className="hover:bg-slate-50/70 transition">
-                    <td className="px-5 py-4 font-mono font-bold text-xs text-indigo-600">
+                  <tr key={voucher._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition">
+                    <td className="px-5 py-4 font-mono font-bold text-xs text-indigo-600 dark:text-indigo-400">
                       {voucher.voucherNumber}
                     </td>
-                    <td className="px-5 py-4 text-xs text-slate-600 whitespace-nowrap">
+                    <td className="px-5 py-4 text-xs text-slate-600 dark:text-slate-300 whitespace-nowrap">
                       {new Date(voucher.expenseDate).toLocaleDateString()}
                     </td>
                     {user?.role !== 'Employee' && (
                       <td className="px-5 py-4">
-                        <div className="font-semibold text-slate-800 text-xs">
+                        <div className="font-semibold text-slate-800 dark:text-slate-200 text-xs">
                           {voucher.employeeName}
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-slate-400 dark:text-slate-500">
                           {voucher.employeeId || 'ID: N/A'}
                         </div>
                       </td>
                     )}
-                    <td className="px-5 py-4 text-xs font-medium text-slate-600">
+                    <td className="px-5 py-4 text-xs font-medium text-slate-600 dark:text-slate-400">
                       {voucher.department}
                     </td>
-                    <td className="px-5 py-4 font-medium text-slate-800 max-w-xs truncate">
+                    <td className="px-5 py-4 font-medium text-slate-800 dark:text-slate-200 max-w-xs truncate">
                       {voucher.title}
                     </td>
-                    <td className="px-5 py-4 text-xs text-slate-600">
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md whitespace-nowrap">
+                    <td className="px-5 py-4 text-xs text-slate-600 dark:text-slate-400">
+                      <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md whitespace-nowrap">
                         {voucher.category}
                       </span>
                     </td>
-                    <td className="px-5 py-4 font-bold text-slate-900 whitespace-nowrap">
+                    <td className="px-5 py-4 font-bold text-slate-900 dark:text-white whitespace-nowrap">
                       ₹{voucher.amount.toLocaleString('en-IN')}
                     </td>
                     <td className="px-5 py-4 whitespace-nowrap">
@@ -425,7 +425,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                       <div className="flex items-center justify-end gap-1.5">
                         <Link
                           to={`/vouchers/${voucher._id}`}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition"
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -436,7 +436,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                           <>
                             <Link
                               to={`/vouchers/${voucher._id}/edit`}
-                              className="p-1.5 rounded-lg text-slate-500 hover:text-amber-600 hover:bg-amber-50 transition"
+                              className="p-1.5 rounded-lg text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                               title="Edit Draft"
                             >
                               <Edit3 className="w-4 h-4" />
@@ -444,7 +444,7 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
                             <button
                               type="button"
                               onClick={() => handleDelete(voucher._id, voucher.voucherNumber)}
-                              className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+                              className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
                               title="Delete Draft"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -462,24 +462,24 @@ export const VoucherList = ({ defaultStatus = 'All', titleOverride = null }) => 
 
         {/* Pagination controls */}
         {pagination.totalPages > 1 && (
-          <div className="p-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+          <div className="p-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
             <div>
-              Showing page <strong className="text-slate-800">{pagination.page}</strong> of{' '}
-              <strong className="text-slate-800">{pagination.totalPages}</strong> (
+              Showing page <strong className="text-slate-800 dark:text-white">{pagination.page}</strong> of{' '}
+              <strong className="text-slate-800 dark:text-white">{pagination.totalPages}</strong> (
               {pagination.total} total vouchers)
             </div>
             <div className="flex items-center gap-1">
               <button
                 disabled={pagination.page <= 1}
                 onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={pagination.page >= pagination.totalPages}
                 onClick={() => setPage((p) => Math.min(p + 1, pagination.totalPages))}
-                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

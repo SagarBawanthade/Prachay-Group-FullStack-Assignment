@@ -1,0 +1,24 @@
+{
+  "name": "prachay-expense-voucher-management-system",
+  "version": "1.0.0",
+  "description": "Full-Stack Corporate Expense Voucher Management System",
+  "scripts": {
+    "start": "node server/src/server.js",
+    "server": "npm run start --prefix server",
+    "server:dev": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client",
+    "install:all": "npm install --prefix server && npm install --prefix client"
+  },
+  "keywords": [
+    "expense-voucher",
+    "mern-stack",
+    "aws-s3",
+    "presigned-urls",
+    "react-vite",
+    "express"
+  ],
+  "author": "Sagar Bawanthade",
+  "license": "ISC"
+}

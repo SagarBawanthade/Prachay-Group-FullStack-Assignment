@@ -5,16 +5,41 @@ A production-ready Full Stack web application engineered to digitize employee ex
 ---
 
 ## 📑 Table of Contents
-1. [Tech Stack](#-tech-stack)
-2. [Key Features & Role-Based Workflows](#-key-features--role-based-workflows)
-3. [Architecture & Design Decisions](#-architecture--design-decisions)
-4. [Database Schema Explanation](#-database-schema-explanation)
-5. [AWS S3 & Presigned URL Architecture](#-aws-s3--presigned-url-architecture)
-6. [API Documentation](#-api-documentation)
-7. [Installation & Setup Guide](#-installation--setup-guide)
-8. [Demo Credentials](#-demo-credentials)
-9. [Assumptions Made](#-assumptions-made)
-10. [Deployment Instructions](#-deployment-instructions)
+1. [Application Screenshots](#-application-screenshots)
+2. [Tech Stack](#-tech-stack)
+3. [Key Features & Role-Based Workflows](#-key-features--role-based-workflows)
+4. [Architecture & Design Decisions](#-architecture--design-decisions)
+5. [Database Schema Explanation](#-database-schema-explanation)
+6. [AWS S3 & Presigned URL Architecture](#-aws-s3--presigned-url-architecture)
+7. [API Documentation](#-api-documentation)
+8. [Installation & Setup Guide](#-installation--setup-guide)
+9. [Demo Credentials](#-demo-credentials)
+10. [Assumptions Made](#-assumptions-made)
+11. [Deployment Instructions](#-deployment-instructions)
+
+---
+
+## 📸 Application Screenshots
+
+### 1. Authentication & Role Switcher
+One-click instant switch for Employee, Director, and Accounts evaluation, plus corporate email registration:
+![Authentication Portal](screenshots/01-login-portal.png)
+
+### 2. Employee Dashboard & Expense Claims
+Real-time claim status counters, total reimbursement metrics, and quick voucher access:
+![Employee Dashboard](screenshots/02-employee-dashboard.png)
+
+### 3. Director Voucher Ledger & Multi-Filter Search
+Executive review screen with search by keyword, status, category, date range, and amount:
+![Director Voucher Ledger](screenshots/03-director-ledger.png)
+
+### 4. Voucher Audit Details with Live AWS S3 Digital Signature
+Detailed financial voucher sheet displaying handwritten digital signatures securely delivered via short-lived AWS S3 presigned URLs:
+![Voucher Details with AWS S3 Signature](screenshots/04-voucher-details-signature.png)
+
+### 5. Accounts Team Reimbursement Monitor
+Organization-wide financial ledger filtered for Approved claims ready for payment processing:
+![Accounts Reimbursement Monitor](screenshots/05-accounts-monitor.png)
 
 ---
 

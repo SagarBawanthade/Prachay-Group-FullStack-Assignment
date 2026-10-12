@@ -49,23 +49,23 @@ export const AccountsDashboard = () => {
   return (
     <div className="space-y-8 text-left">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span className="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold uppercase tracking-wider backdrop-blur-xs flex items-center gap-1.5 w-fit">
+          <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-200 inline-flex items-center gap-1.5">
             <CreditCard className="w-3.5 h-3.5" /> Accounts & Finance Console
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 text-white">
+          <h1 className="text-2xl font-bold mt-2 text-slate-900">
             Reimbursement Monitoring
           </h1>
-          <p className="text-emerald-100 text-sm mt-1">
+          <p className="text-slate-500 text-sm mt-0.5">
             Tracking organization-wide approved expenditures, audit signatures, and payment queue.
           </p>
         </div>
         <Link
           to="/vouchers?status=Approved"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold shadow-md transition active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm transition shadow-xs cursor-pointer"
         >
-          <Receipt className="w-5 h-5" />
+          <Receipt className="w-4 h-4" />
           Process Approved Vouchers ({stats?.approved || 0})
         </Link>
       </div>

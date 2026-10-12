@@ -58,23 +58,26 @@ export const EmployeeDashboard = () => {
   return (
     <div className="space-y-8 text-left">
       {/* Welcome & Action Banner */}
-      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-600 rounded-2xl p-6 sm:p-8 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span className="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold uppercase tracking-wider backdrop-blur-xs">
-            Employee Portal
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 text-white">
-            Welcome back, {user?.name}!
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+              Employee Portal
+            </span>
+            <span className="text-xs text-slate-500">ID: {user?.employeeId || 'EMP-1042'}</span>
+          </div>
+          <h1 className="text-2xl font-bold mt-2 text-slate-900">
+            Welcome, {user?.name}
           </h1>
-          <p className="text-indigo-100 text-sm mt-1 max-w-xl">
-            Department: <strong className="text-white">{user?.department || 'Engineering'}</strong> | Employee ID: <strong className="text-white">{user?.employeeId || 'EMP-1042'}</strong>
+          <p className="text-slate-500 text-sm mt-0.5">
+            Department: <strong className="text-slate-700">{user?.department || 'Engineering'}</strong>
           </p>
         </div>
         <Link
           to="/vouchers/create"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-indigo-700 font-bold hover:bg-indigo-50 shadow-md transition active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition shadow-xs cursor-pointer"
         >
-          <FilePlus className="w-5 h-5 text-indigo-600" />
+          <FilePlus className="w-4 h-4" />
           Create New Voucher
         </Link>
       </div>

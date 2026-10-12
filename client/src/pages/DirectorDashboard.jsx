@@ -56,24 +56,24 @@ export const DirectorDashboard = () => {
   return (
     <div className="space-y-8 text-left">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-purple-800 via-indigo-800 to-purple-900 rounded-2xl p-6 sm:p-8 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span className="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold uppercase tracking-wider backdrop-blur-xs flex items-center gap-1.5 w-fit">
+          <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-700 text-xs font-semibold border border-purple-200 inline-flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5" /> Director Management Console
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-2 text-white">
+          <h1 className="text-2xl font-bold mt-2 text-slate-900">
             Overview & Approvals
           </h1>
-          <p className="text-purple-100 text-sm mt-1">
-            Reviewing expense claims for organization-wide departments.
+          <p className="text-slate-500 text-sm mt-0.5">
+            Reviewing expense claims across all company departments.
           </p>
         </div>
         <Link
           to="/approvals"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-100 hover:bg-white text-purple-900 font-bold shadow-md transition active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition shadow-xs cursor-pointer"
         >
-          <CheckSquare className="w-5 h-5 text-purple-700" />
-          Review Pending Approvals ({stats?.pendingApprovalCount || 0})
+          <CheckSquare className="w-4 h-4 text-purple-400" />
+          Pending Approvals ({stats?.pendingApprovalCount || 0})
         </Link>
       </div>
 

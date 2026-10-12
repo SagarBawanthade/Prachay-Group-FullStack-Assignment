@@ -8,9 +8,7 @@ import {
   Mail,
   User,
   Building2,
-  BadgeAlert,
   ArrowRight,
-  ShieldCheck,
   AlertCircle,
   UserPlus,
 } from 'lucide-react';
@@ -29,7 +27,6 @@ export const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Employee');
   const [department, setDepartment] = useState('Engineering');
   const [employeeId, setEmployeeId] = useState('');
 
@@ -48,53 +45,52 @@ export const Register = () => {
         name,
         email,
         password,
-        role,
+        role: 'Employee', // All new self-registered users are Employees
         department,
         employeeId: employeeId || `EMP-${Math.floor(1000 + Math.random() * 9000)}`,
       });
 
       if (res.data.success) {
-        // Automatically login the registered user
         await login(email, password);
         navigate('/');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message || 'Registration failed. Please check your details.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-lg w-full">
-        <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
           {/* Header */}
-          <div className="p-6 sm:p-8 text-center border-b border-slate-100 bg-slate-50/50">
-            <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mx-auto shadow-md shadow-indigo-600/30 mb-3">
+          <div className="p-6 border-b border-slate-200 bg-white text-center">
+            <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white mx-auto mb-3 shadow-xs">
               <UserPlus className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              Create an Account
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+              Register New Employee
             </h1>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1">
-              Join Prachay Securities Expense Voucher Portal
+            <p className="text-xs text-slate-500 mt-1">
+              Create an account to submit and track expense claims
             </p>
           </div>
 
-          <div className="p-6 sm:p-8">
+          <div className="p-6">
             {error && (
-              <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-left">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                <p className="text-xs font-semibold text-rose-800">{error}</p>
+              <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 flex items-start gap-2.5 text-left">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <p className="text-xs font-medium text-red-800">{error}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Full Name <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Full Name <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -103,16 +99,16 @@ export const Register = () => {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. John Doe"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="e.g. Om Deshmukh or Sagar Bawanthade"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Corporate Email <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Corporate Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -121,16 +117,16 @@ export const Register = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. john@prachay.com"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="e.g. om@prachay.com"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Password */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Password <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -140,40 +136,22 @@ export const Register = () => {
                     minLength={6}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Minimum 6 characters"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="At least 6 characters"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-slate-900 focus:outline-none"
                   />
                 </div>
-              </div>
-
-              {/* Role selection */}
-              <div className="grid grid-cols-3 gap-2 pt-1">
-                {['Employee', 'Director', 'Accounts'].map((r) => (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setRole(r)}
-                    className={`py-2 px-3 rounded-xl border text-xs font-bold transition cursor-pointer text-center ${
-                      role === r
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-200'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-600'
-                    }`}
-                  >
-                    {r === 'Accounts' ? 'Accounts Team' : r}
-                  </button>
-                ))}
               </div>
 
               {/* Department & Employee ID */}
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Department
                   </label>
                   <select
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-xs font-medium bg-white focus:ring-2 focus:ring-slate-900 focus:outline-none"
                   >
                     {DEPARTMENTS.map((dept) => (
                       <option key={dept} value={dept}>
@@ -184,41 +162,41 @@ export const Register = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Employee ID (Optional)
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Employee ID
                   </label>
                   <input
                     type="text"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
-                    placeholder="e.g. EMP-2035"
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="e.g. EMP-2045"
+                    className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-slate-900 focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Submit button */}
-              <div className="pt-3">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md shadow-indigo-600/20 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+                  className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 shadow-xs"
                 >
                   {loading ? (
                     'Creating Account...'
                   ) : (
                     <>
-                      Register & Go to Dashboard <ArrowRight className="w-4 h-4" />
+                      Register Employee Account <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
               </div>
             </form>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 text-center">
+            <div className="mt-5 pt-4 border-t border-slate-200 text-center">
               <p className="text-xs text-slate-500">
                 Already registered?{' '}
-                <Link to="/login" className="font-bold text-indigo-600 hover:text-indigo-800">
+                <Link to="/login" className="font-semibold text-slate-900 hover:underline">
                   Sign in here
                 </Link>
               </p>

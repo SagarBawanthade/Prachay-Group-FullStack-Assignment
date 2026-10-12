@@ -93,6 +93,10 @@ export const seedDatabase = async () => {
     console.log('   2. Director: director@prachay.com / password123');
     console.log('   3. Accounts: accounts@prachay.com / password123');
 
+    // AWS S3 Signature Keys (stored in AWS S3 bucket)
+    const empSigKey = 'signatures/emp-signature.jpeg';
+    const dirSigKey = 'signatures/admin-signature.jpeg';
+
     // Create Initial Demo Vouchers covering all statuses (Approved, Submitted, Draft, Rejected)
     const vouchers = [
       {
@@ -108,10 +112,10 @@ export const seedDatabase = async () => {
         employee: employeeUser._id,
         employeeName: employeeUser.name,
         employeeId: employeeUser.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
+        employeeSignatureKey: empSigKey,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
-        directorSignatureKey: `local:${dirSigFile}`,
+        directorSignatureKey: dirSigKey,
         approvalDate: new Date('2026-03-26'),
       },
       {
@@ -127,7 +131,7 @@ export const seedDatabase = async () => {
         employee: employeeUser._id,
         employeeName: employeeUser.name,
         employeeId: employeeUser.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
+        employeeSignatureKey: empSigKey,
       },
       {
         voucherNumber: 'EV-2026-0003',
@@ -156,7 +160,7 @@ export const seedDatabase = async () => {
         employee: employeeUser._id,
         employeeName: employeeUser.name,
         employeeId: employeeUser.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
+        employeeSignatureKey: empSigKey,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
         rejectionReason: 'Expense exceeds standard quarterly allowance. Please attach prior written pre-approval from department VP and revised itemized GST invoices.',
@@ -174,10 +178,10 @@ export const seedDatabase = async () => {
         employee: employeeUser._id,
         employeeName: employeeUser.name,
         employeeId: employeeUser.employeeId,
-        employeeSignatureKey: `local:${empSigFile}`,
+        employeeSignatureKey: empSigKey,
         approvedBy: directorUser._id,
         directorName: directorUser.name,
-        directorSignatureKey: `local:${dirSigFile}`,
+        directorSignatureKey: dirSigKey,
         approvalDate: new Date('2026-04-06'),
       },
     ];

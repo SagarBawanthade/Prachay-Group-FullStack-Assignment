@@ -10,10 +10,10 @@ export const connectDB = async () => {
     const conn = await mongoose.connect(mongoURI, {
       serverSelectionTimeoutMS: timeoutMs,
     });
-    console.log(`✅ MongoDB Connected (${isAtlas ? 'MongoDB Atlas Cloud' : 'Local MongoDB'}): ${conn.connection.host}`);
+    console.log(`MongoDB Connected (${isAtlas ? 'MongoDB Atlas Cloud' : 'Local MongoDB'}): ${conn.connection.host}`);
   } catch (err) {
-    console.warn(`⚠️ MongoDB connection failed (${err.message}). Attempting in-memory fallback for local demo...`);
-    
+    console.warn(`MongoDB connection failed (${err.message}). Attempting in-memory fallback for local demo...`);
+
     try {
       const { MongoMemoryServer } = await import('mongodb-memory-server');
       const mongod = await MongoMemoryServer.create();

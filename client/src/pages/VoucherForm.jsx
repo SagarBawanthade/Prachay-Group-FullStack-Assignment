@@ -180,9 +180,9 @@ export const VoucherForm = () => {
       {/* Main Glass Form Card */}
       <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/60 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-xs p-6 sm:p-8 space-y-6">
         {/* User Context Metadata */}
-        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850/80 border border-slate-200/80 dark:border-slate-750 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 block">
               Claimant Name
             </span>
             <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-0.5 block">
@@ -190,7 +190,7 @@ export const VoucherForm = () => {
             </span>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 block">
               Employee ID
             </span>
             <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-0.5 block font-mono">
@@ -198,7 +198,7 @@ export const VoucherForm = () => {
             </span>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 block">
               Target Lifecycle
             </span>
             <span className="text-xs sm:text-sm font-bold text-indigo-600 dark:text-indigo-400 mt-0.5 block">
@@ -219,14 +219,14 @@ export const VoucherForm = () => {
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition ${
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border bg-white dark:bg-slate-950 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition ${
                   errors.department
                     ? 'border-rose-400 bg-rose-50/20'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
+                    : 'border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'
                 }`}
               >
                 {DEPARTMENTS.map((dept) => (
-                  <option key={dept} value={dept} className="dark:bg-slate-900">
+                  <option key={dept} value={dept} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
                     {dept}
                   </option>
                 ))}
@@ -248,10 +248,10 @@ export const VoucherForm = () => {
                 type="date"
                 value={expenseDate}
                 onChange={(e) => setExpenseDate(e.target.value)}
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-950 dark:[color-scheme:dark] transition ${
                   errors.expenseDate
                     ? 'border-rose-400 bg-rose-50/20'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
+                    : 'border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'
                 }`}
               />
             </div>
@@ -270,10 +270,10 @@ export const VoucherForm = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Flight travel tickets for Mumbai regional client pilot meeting"
-              className={`w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+              className={`w-full px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-950 transition ${
                 errors.title
                   ? 'border-rose-400 bg-rose-50/20'
-                  : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
+                  : 'border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500'
               }`}
             />
             {errors.title && <p className="text-xs text-rose-600 mt-1">{errors.title}</p>}
@@ -289,10 +289,10 @@ export const VoucherForm = () => {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
               >
                 {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat} className="dark:bg-slate-900">
+                  <option key={cat} value={cat} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
                     {cat}
                   </option>
                 ))}
@@ -316,10 +316,10 @@ export const VoucherForm = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-800 transition ${
+                className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-950 transition ${
                   errors.amount
                     ? 'border-rose-400 bg-rose-50/20'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
+                    : 'border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500'
                 }`}
               />
             </div>
@@ -336,7 +336,7 @@ export const VoucherForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Provide itemized details, invoice numbers, or business justification..."
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-slate-900 dark:focus:ring-indigo-500 focus:outline-none transition"
             />
           </div>
 
@@ -370,7 +370,7 @@ export const VoucherForm = () => {
             type="button"
             disabled={loading}
             onClick={() => handleSubmit('draft')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-750 transition cursor-pointer shadow-2xs"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-bold text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer shadow-2xs"
           >
             <Save className="w-4 h-4" />
             {loading ? 'Saving...' : 'Save as Draft'}

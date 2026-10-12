@@ -161,7 +161,7 @@ export const VoucherDetails = () => {
           {/* Print button */}
           <button
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-750 font-semibold text-xs transition cursor-pointer shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs transition cursor-pointer shadow-2xs"
           >
             <Printer className="w-3.5 h-3.5" /> Print / PDF
           </button>
@@ -177,7 +177,7 @@ export const VoucherDetails = () => {
       </div>
 
       {/* Printable Corporate Voucher Sheet */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-10 space-y-7 print:border-none print:shadow-none print:p-0">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-10 space-y-7 print:border-none print:shadow-none print:p-0 print:bg-white print:text-black">
         {/* Document Header */}
         <div className="border-b border-slate-200 dark:border-slate-800 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -208,7 +208,7 @@ export const VoucherDetails = () => {
         </div>
 
         {/* Expense Information Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 p-4 rounded-xl bg-slate-50 dark:bg-slate-850/80 border border-slate-200/80 dark:border-slate-750 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 text-xs">
           <div>
             <span className="font-bold uppercase tracking-wider text-slate-400 block mb-1 text-[10px]">
               Department
@@ -251,7 +251,7 @@ export const VoucherDetails = () => {
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Expense Particulars & Business Justification
           </h3>
-          <div className="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850/50 space-y-2">
+          <div className="p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 space-y-2">
             <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
               {voucher.title}
             </h4>
@@ -263,7 +263,7 @@ export const VoucherDetails = () => {
 
         {/* Total Reimbursable Amount Card */}
         <div className="flex justify-end">
-          <div className="w-full sm:w-72 bg-slate-900 dark:bg-slate-800 text-white p-5 rounded-xl text-right shadow-sm border border-slate-800 dark:border-slate-700">
+          <div className="w-full sm:w-72 bg-slate-900 dark:bg-slate-950 text-white p-5 rounded-xl text-right shadow-sm border border-slate-800 dark:border-slate-800">
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
               Total Payable Amount
             </span>
@@ -276,7 +276,7 @@ export const VoucherDetails = () => {
         {/* Digital Signatures Audit Grid */}
         <div className="pt-6 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-5">
           {/* Employee Signature Card */}
-          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850/60 space-y-3 text-left">
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 space-y-3 text-left">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 1. Employee Submission
@@ -291,15 +291,15 @@ export const VoucherDetails = () => {
             </p>
 
             {voucher.employeeSignatureUrl ? (
-              <div className="h-24 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center p-2">
+              <div className="h-24 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center p-2">
                 <img
                   src={voucher.employeeSignatureUrl}
                   alt="Employee Signature"
-                  className="max-h-full max-w-full object-contain dark:invert"
+                  className="max-h-full max-w-full object-contain dark:invert print:invert-0"
                 />
               </div>
             ) : (
-              <div className="h-24 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center text-xs text-slate-400 italic">
+              <div className="h-24 bg-slate-50 dark:bg-slate-900/60 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-400 italic">
                 Signature not attached yet
               </div>
             )}
@@ -309,7 +309,7 @@ export const VoucherDetails = () => {
           </div>
 
           {/* Director Approval Signature Card */}
-          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850/60 space-y-3 text-left">
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 space-y-3 text-left">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 2. Executive Approval
@@ -326,11 +326,11 @@ export const VoucherDetails = () => {
             </p>
 
             {voucher.directorSignatureUrl ? (
-              <div className="h-24 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center p-2">
+              <div className="h-24 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center p-2">
                 <img
                   src={voucher.directorSignatureUrl}
                   alt="Director Signature"
-                  className="max-h-full max-w-full object-contain dark:invert"
+                  className="max-h-full max-w-full object-contain dark:invert print:invert-0"
                 />
               </div>
             ) : voucher.status === 'Rejected' ? (
@@ -341,7 +341,7 @@ export const VoucherDetails = () => {
                 </span>
               </div>
             ) : (
-              <div className="h-24 bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center text-xs text-slate-400 italic">
+              <div className="h-24 bg-slate-50 dark:bg-slate-900/60 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center text-xs text-slate-400 italic">
                 Awaiting Executive Review
               </div>
             )}
@@ -360,8 +360,8 @@ export const VoucherDetails = () => {
 
       {/* Review Modal for Director */}
       {showReviewModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-5 text-left animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
+          <div className="bg-white dark:bg-slate-950 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-5 text-left animate-fadeIn">
             <div>
               <h3 className="text-lg font-black text-slate-900 dark:text-white">
                 Director Voucher Decision
@@ -384,8 +384,8 @@ export const VoucherDetails = () => {
                 onClick={() => setDecision('Approve')}
                 className={`p-3 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer transition ${
                   decision === 'Approve'
-                    ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 ring-2 ring-emerald-200 dark:ring-emerald-800'
-                    : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'
+                    ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 ring-2 ring-emerald-200 dark:ring-emerald-800'
+                    : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -397,8 +397,8 @@ export const VoucherDetails = () => {
                 onClick={() => setDecision('Reject')}
                 className={`p-3 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer transition ${
                   decision === 'Reject'
-                    ? 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 ring-2 ring-rose-200 dark:ring-rose-800'
-                    : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'
+                    ? 'border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 ring-2 ring-rose-200 dark:ring-rose-800'
+                    : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
@@ -429,7 +429,7 @@ export const VoucherDetails = () => {
                   value={rejectionReason}
                   onChange={(e) => setRejectionReason(e.target.value)}
                   placeholder="Explain why this reimbursement request cannot be approved..."
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs sm:text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
             )}
@@ -439,7 +439,7 @@ export const VoucherDetails = () => {
               <button
                 type="button"
                 onClick={() => setShowReviewModal(false)}
-                className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer"
               >
                 Cancel
               </button>

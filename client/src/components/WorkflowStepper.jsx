@@ -28,7 +28,7 @@ export const WorkflowStepper = ({ status, rejectionReason }) => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {steps.map((step, idx) => {
           const stepState = getStepStatus(idx);
-          let bgClass = 'bg-slate-50 dark:bg-slate-850 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800';
+          let bgClass = 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800';
 
           if (stepState === 'complete') {
             bgClass = 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-700';

@@ -42,10 +42,9 @@ export const Navbar = () => {
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
-      isActive
-        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs'
-        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+    `flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${isActive
+      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs'
+      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
     }`;
 
   return (
@@ -60,7 +59,7 @@ export const Navbar = () => {
               </div>
               <div className="text-left">
                 <span className="text-sm font-black tracking-tight text-slate-900 dark:text-white block leading-tight">
-                  Prachay Securities
+                  Prachay Group
                 </span>
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
                   Corporate Expense Management
